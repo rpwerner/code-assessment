@@ -5,3 +5,15 @@ spring:
 giftandgo:
     feature:
       validation: true
+    blacklist:
+      countries:
+        - CN
+        - US
+        - ES
+      isps:
+        - "Amazon.com, Inc."
+        - "Google LLC"
+        - "Microsoft Corporation"
+ipapi:
+  url: http://ip-api.com/json/
+  fields: countryCode,isp
