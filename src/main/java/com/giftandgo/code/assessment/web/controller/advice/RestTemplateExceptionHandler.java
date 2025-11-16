@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Order(2)
-public class RestTemplateContollerAdvice extends ApplicationControllerAdvice {
+public class RestTemplateExceptionHandler extends GlobalExceptionHandler {
 
     @ExceptionHandler(RestTemplateErrorException.class)
     public ResponseEntity handleRestTemplateErrorException(RestTemplateErrorException ex) {

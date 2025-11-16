@@ -1,6 +1,6 @@
 package com.giftandgo.code.assessment.web.controller.advice;
 
-import com.giftandgo.code.assessment.web.filter.IpRestrictionException;
+import com.giftandgo.code.assessment.web.exception.IpRestrictionException;
 import com.giftandgo.code.assessment.web.controller.dto.ErrorReponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IpRestrictionException.class)
     public ResponseEntity handleIpRestrictionException(IpRestrictionException ex) {

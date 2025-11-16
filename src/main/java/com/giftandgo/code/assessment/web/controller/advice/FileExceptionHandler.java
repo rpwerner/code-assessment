@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestControllerAdvice
 @Order(1)
-public class FileControllerAdvice extends ApplicationControllerAdvice {
+public class FileExceptionHandler extends GlobalExceptionHandler {
 
     @ExceptionHandler(CannotProcessFileException.class)
     public ResponseEntity handleCannotProcessFileException(CannotProcessFileException ex) {

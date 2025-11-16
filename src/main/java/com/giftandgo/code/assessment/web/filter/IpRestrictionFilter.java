@@ -2,6 +2,7 @@ package com.giftandgo.code.assessment.web.filter;
 
 import com.giftandgo.code.assessment.external.ipapi.IpApiData;
 import com.giftandgo.code.assessment.external.ipapi.IpAPIService;
+import com.giftandgo.code.assessment.web.exception.IpRestrictionException;
 import com.giftandgo.code.assessment.web.filter.strategy.IpRestrictionStrategy;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
