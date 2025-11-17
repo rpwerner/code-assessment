@@ -4,7 +4,7 @@ package com.giftandgo.code.assessment.domain.service;
 import com.giftandgo.code.assessment.domain.restriction.CountryIpRestriction;
 import com.giftandgo.code.assessment.domain.restriction.IpRestrictionStrategy;
 import com.giftandgo.code.assessment.domain.restriction.IspIpRestriction;
-import com.giftandgo.code.assessment.domain.result.IpRestrictionResult;
+import com.giftandgo.code.assessment.domain.restriction.IpRestrictionResult;
 import com.giftandgo.code.assessment.external.client.ipapi.IpApiData;
 import com.giftandgo.code.assessment.web.exception.IpRestrictionException;
 import org.junit.jupiter.api.BeforeEach;

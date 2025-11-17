@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 
 @Builder
-public record UserRequestDTO(
+public record UserRequest(
         @NotEmpty
         String uuid,
         @NotEmpty

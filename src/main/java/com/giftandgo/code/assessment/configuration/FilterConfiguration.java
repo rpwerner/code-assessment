@@ -35,7 +35,7 @@ public class FilterConfiguration {
 
         registrationBean.setFilter(new LoggingDBFilter(resolver, loggingService));
         registrationBean.addUrlPatterns("/giftandgo/*");
-        registrationBean.setOrder(1);
+        registrationBean.setOrder(1); // should be first as it will control requests and responses for logging
 
         return registrationBean;
     }

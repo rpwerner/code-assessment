@@ -6,6 +6,7 @@ import com.giftandgo.code.assessment.external.client.ipapi.IpApiData;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
@@ -14,16 +15,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+@AllArgsConstructor
 public class LoggingDBFilter extends OncePerRequestFilter {
 
-    HandlerExceptionResolver resolver;
+    private HandlerExceptionResolver resolver;
 
-    LoggingService loggingService;
-
-    public LoggingDBFilter(HandlerExceptionResolver resolver, LoggingService loggingService) {
-        this.resolver = resolver;
-        this.loggingService = loggingService;
-    }
+    private LoggingService loggingService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {

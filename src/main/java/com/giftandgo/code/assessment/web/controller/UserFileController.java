@@ -3,7 +3,7 @@ package com.giftandgo.code.assessment.web.controller;
 import com.giftandgo.code.assessment.domain.service.UserFileService;
 import com.giftandgo.code.assessment.web.controller.dto.ProcessUsersRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/giftandgo")
+@AllArgsConstructor
 public class UserFileController {
 
-    @Autowired
-    UserFileService userFileService;
+    private UserFileService userFileService;
 
     @PostMapping(value = "/process/users")
     public ResponseEntity<byte[]> processUsers(@Valid @RequestBody ProcessUsersRequest processUsersRequest) {

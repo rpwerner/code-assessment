@@ -1,4 +1,4 @@
-package com.giftandgo.code.assessment.external.client.resttemplate.exception;
+package com.giftandgo.code.assessment.external.client.resttemplate;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatusCode;

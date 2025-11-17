@@ -1,6 +1,6 @@
 package com.giftandgo.code.assessment.domain.service;
 
-import com.giftandgo.code.assessment.web.controller.dto.UserRequestDTO;
+import com.giftandgo.code.assessment.web.controller.dto.UserRequest;
 import com.giftandgo.code.assessment.web.exception.InvalidFileDataStructureException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,27 +23,27 @@ public class UserFileParsingServiceUnitTest {
     @Test
     public void givenFileInBytes_whenFileExists_thenReturnListOfUsers() {
 
-        UserRequestDTO userRequestDTO = UserRequestDTO.builder().build();
-        doReturn(userRequestDTO).when(fileParserService).readUserFromFile(anyString());
+        UserRequest userRequest = UserRequest.builder().build();
+        doReturn(userRequest).when(fileParserService).readUserFromFile(anyString());
 
-        List<UserRequestDTO> resultUserRequestDTOList = fileParserService.parseAndReadUsers(new byte[1]);
+        List<UserRequest> resultUserRequestList = fileParserService.parseAndReadUsers(new byte[1]);
 
-        assertEquals(1, resultUserRequestDTOList.size());
-        assertEquals(userRequestDTO, resultUserRequestDTOList.get(0));
+        assertEquals(1, resultUserRequestList.size());
+        assertEquals(userRequest, resultUserRequestList.get(0));
     }
 
     @Test
     public void givenLineFromFile_whenUserIsValid_thenReturnCorrectUser() {
         String line = "18148426-89e1-11ee-b9d1-0242ac120002|1X1D14|John Smith|Likes Apricots|Rides A Bike|6.2|12.1";
-        UserRequestDTO userRequestDTO = fileParserService.readUserFromFile(line);
+        UserRequest userRequest = fileParserService.readUserFromFile(line);
 
-        assertEquals("18148426-89e1-11ee-b9d1-0242ac120002", userRequestDTO.uuid());
-        assertEquals("1X1D14", userRequestDTO.id());
-        assertEquals("John Smith", userRequestDTO.name());
-        assertEquals("Likes Apricots", userRequestDTO.likes());
-        assertEquals("Rides A Bike", userRequestDTO.transport());
-        assertEquals("6.2", userRequestDTO.averageSpeed());
-        assertEquals("12.1", userRequestDTO.topSpeed());
+        assertEquals("18148426-89e1-11ee-b9d1-0242ac120002", userRequest.uuid());
+        assertEquals("1X1D14", userRequest.id());
+        assertEquals("John Smith", userRequest.name());
+        assertEquals("Likes Apricots", userRequest.likes());
+        assertEquals("Rides A Bike", userRequest.transport());
+        assertEquals("6.2", userRequest.averageSpeed());
+        assertEquals("12.1", userRequest.topSpeed());
     }
 
     @Test

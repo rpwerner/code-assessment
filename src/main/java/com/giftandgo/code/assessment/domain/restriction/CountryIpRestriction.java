@@ -1,9 +1,9 @@
 package com.giftandgo.code.assessment.domain.restriction;
 
 import com.giftandgo.code.assessment.configuration.CountriesBlacklistProperties;
-import com.giftandgo.code.assessment.domain.result.IpRestrictionResult;
 import com.giftandgo.code.assessment.external.client.ipapi.IpApiData;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class CountryIpRestriction implements IpRestrictionStrategy {
 

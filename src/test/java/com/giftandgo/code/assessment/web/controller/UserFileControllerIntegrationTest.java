@@ -6,8 +6,8 @@ import com.giftandgo.code.assessment.FileHandlingHelper;
 import com.giftandgo.code.assessment.WiremockStubHelper;
 import com.giftandgo.code.assessment.domain.entity.LogEntry;
 import com.giftandgo.code.assessment.domain.persistence.LogEntryRepository;
-import com.giftandgo.code.assessment.web.controller.dto.UserResponseDTO;
-import com.giftandgo.code.assessment.web.controller.dto.ErrorReponse;
+import com.giftandgo.code.assessment.web.controller.dto.UserResponse;
+import com.giftandgo.code.assessment.web.controller.dto.ErrorResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -50,7 +50,7 @@ public class UserFileControllerIntegrationTest {
 
     @ParameterizedTest
     @MethodSource("generateExpectedUsers")
-    public void givenValidFile_whenTheDataIsCorrect_thenOkRequestWithParsedUsers(int userPosition, UserResponseDTO expectedUserResponseDTO) throws Exception {
+    public void givenValidFile_whenTheDataIsCorrect_thenOkRequestWithParsedUsers(int userPosition, UserResponse expectedUserResponse) throws Exception {
         String givenIp = "123.123.123.123";
         wiremockStubHelper.stubIpNotBlackListed(givenIp);
 
@@ -66,25 +66,25 @@ public class UserFileControllerIntegrationTest {
 
         String json = mvcResult.getResponse().getContentAsString();
         ObjectMapper objectMapper = new ObjectMapper();
-        List<UserResponseDTO> userResponseDTOS = objectMapper.readValue(json, new TypeReference<>() {});
+        List<UserResponse> userResponses = objectMapper.readValue(json, new TypeReference<>() {});
 
-        assertFalse(userResponseDTOS.isEmpty());
-        assertEquals(3, userResponseDTOS.size());
+        assertFalse(userResponses.isEmpty());
+        assertEquals(3, userResponses.size());
 
-        UserResponseDTO currentResponseUserResponseDTO = userResponseDTOS.get(userPosition);
-        assertEquals(expectedUserResponseDTO.name(), currentResponseUserResponseDTO.name());
-        assertEquals(expectedUserResponseDTO.transport(), currentResponseUserResponseDTO.transport());
-        assertEquals(expectedUserResponseDTO.topSpeed(), currentResponseUserResponseDTO.topSpeed());
+        UserResponse currentResponseUserResponse = userResponses.get(userPosition);
+        assertEquals(expectedUserResponse.name(), currentResponseUserResponse.name());
+        assertEquals(expectedUserResponse.transport(), currentResponseUserResponse.transport());
+        assertEquals(expectedUserResponse.topSpeed(), currentResponseUserResponse.topSpeed());
     }
 
     private static Stream<Arguments> generateExpectedUsers() {
         return Stream.of(
                 Arguments.of(0,
-                        UserResponseDTO.builder().name("John Smith").transport("Rides A Bike").topSpeed(12.1).build()),
+                        UserResponse.builder().name("John Smith").transport("Rides A Bike").topSpeed(12.1).build()),
                 Arguments.of(1,
-                        UserResponseDTO.builder().name("Mike Smith").transport("Drives an SUV").topSpeed(95.5).build()),
+                        UserResponse.builder().name("Mike Smith").transport("Drives an SUV").topSpeed(95.5).build()),
                 Arguments.of(2,
-                        UserResponseDTO.builder().name("Jenny Walters").transport("Rides A Scooter").topSpeed(15.3).build()));
+                        UserResponse.builder().name("Jenny Walters").transport("Rides A Scooter").topSpeed(15.3).build()));
     }
 
     @Test
@@ -103,9 +103,9 @@ public class UserFileControllerIntegrationTest {
 
         String json = mvcResult.getResponse().getContentAsString();
         ObjectMapper objectMapper = new ObjectMapper();
-        ErrorReponse errorReponse = objectMapper.readValue(json, ErrorReponse.class);
+        ErrorResponse errorResponse = objectMapper.readValue(json, ErrorResponse.class);
 
-        List<String> errors = errorReponse.errors();
+        List<String> errors = errorResponse.errors();
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
         assertEquals("Input request file cannot be empty", errors.get(0));
@@ -127,9 +127,9 @@ public class UserFileControllerIntegrationTest {
 
         String json = mvcResult.getResponse().getContentAsString();
         ObjectMapper objectMapper = new ObjectMapper();
-        ErrorReponse errorReponse = objectMapper.readValue(json, ErrorReponse.class);
+        ErrorResponse errorResponse = objectMapper.readValue(json, ErrorResponse.class);
 
-        List<String> errors = errorReponse.errors();
+        List<String> errors = errorResponse.errors();
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
     }

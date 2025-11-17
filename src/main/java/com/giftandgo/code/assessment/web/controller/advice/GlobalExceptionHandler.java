@@ -1,7 +1,9 @@
 package com.giftandgo.code.assessment.web.controller.advice;
 
+import com.giftandgo.code.assessment.web.controller.dto.ErrorResponse;
 import com.giftandgo.code.assessment.web.exception.IpRestrictionException;
-import com.giftandgo.code.assessment.web.controller.dto.ErrorReponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -21,10 +23,11 @@ import java.util.List;
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(IpRestrictionException.class)
     public ResponseEntity handleIpRestrictionException(IpRestrictionException ex) {
-        //TODO maybe tell if it is the IP or ISP the problem?
+        logger.error(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(buildSimpleErrorResponse(ex.getMessage()));
     }
 
@@ -33,24 +36,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                           HttpHeaders headers,
                                                           HttpStatusCode status,
                                                           WebRequest request) {
+        logger.error(ex.getMessage(), ex);
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(FieldError::getDefaultMessage)
                 .toList();
 
-        return ResponseEntity.badRequest().body(new ErrorReponse(errors));
+        return ResponseEntity.badRequest().body(new ErrorResponse(errors));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleAll(Exception ex) {
-        //log exception
+        logger.error(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildSimpleErrorResponse("Unexpected server error"));
     }
 
-    protected ErrorReponse buildSimpleErrorResponse(String errorMessage) {
+    protected ErrorResponse buildSimpleErrorResponse(String errorMessage) {
         List<String> errors = new ArrayList<>();
         errors.add(errorMessage);
-        return new ErrorReponse(errors);
+        return new ErrorResponse(errors);
     }
 }

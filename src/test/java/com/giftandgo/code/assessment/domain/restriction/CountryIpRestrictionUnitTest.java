@@ -1,7 +1,6 @@
 package com.giftandgo.code.assessment.domain.restriction;
 
 import com.giftandgo.code.assessment.configuration.CountriesBlacklistProperties;
-import com.giftandgo.code.assessment.domain.result.IpRestrictionResult;
 import com.giftandgo.code.assessment.external.client.ipapi.IpApiData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

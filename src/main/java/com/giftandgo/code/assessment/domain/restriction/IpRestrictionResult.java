@@ -1,4 +1,4 @@
-package com.giftandgo.code.assessment.domain.result;
+package com.giftandgo.code.assessment.domain.restriction;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,5 @@
-package com.giftandgo.code.assessment.external.client.resttemplate.handler;
+package com.giftandgo.code.assessment.external.client.resttemplate;
 
-import com.giftandgo.code.assessment.external.client.resttemplate.exception.RestTemplateErrorException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;

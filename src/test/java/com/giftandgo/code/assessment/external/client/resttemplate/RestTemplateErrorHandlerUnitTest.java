@@ -1,6 +1,7 @@
-package com.giftandgo.code.assessment.external.client.resttemplate.handler;
+package com.giftandgo.code.assessment.external.client.resttemplate;
 
-import com.giftandgo.code.assessment.external.client.resttemplate.exception.RestTemplateErrorException;
+import com.giftandgo.code.assessment.external.client.resttemplate.RestTemplateErrorException;
+import com.giftandgo.code.assessment.external.client.resttemplate.RestTemplateErrorHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

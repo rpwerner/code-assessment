@@ -1,30 +1,33 @@
 package com.giftandgo.code.assessment.web.service;
 
-import com.giftandgo.code.assessment.web.mapper.OutcomeMapper;
-import com.giftandgo.code.assessment.web.controller.dto.UserRequestDTO;
-import com.giftandgo.code.assessment.web.controller.dto.UserResponseDTO;
-import com.giftandgo.code.assessment.web.mapper.UserDTOMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.giftandgo.code.assessment.web.controller.dto.UserRequest;
+import com.giftandgo.code.assessment.web.controller.dto.UserResponse;
+import com.google.gson.Gson;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class OutcomeService {
 
-    @Autowired
-    UserDTOMapper userDTOMapper;
+    private Gson gson;
 
-    @Autowired
-    OutcomeMapper outcomeMapper;
-
-    public byte[] generateOutcomeData(List<UserRequestDTO> userRequestDTOS) {
-        List<UserResponseDTO> userResponseDTOS = userRequestDTOS.stream()
-                .map(dto -> userDTOMapper.transformUserDTO(dto))
+    public byte[] generateOutcomeData(List<UserRequest> userRequests) {
+        List<UserResponse> userResponses = userRequests.stream()
+                .map(this::transformUserDTO)
                 .toList();
 
-        return outcomeMapper.transformUserResponseDTOsToJson(userResponseDTOS)
-                .getBytes(StandardCharsets.UTF_8);
+        return gson.toJson(userResponses).getBytes(StandardCharsets.UTF_8);
+    }
+
+    protected UserResponse transformUserDTO(UserRequest userRequest) {
+        return UserResponse.builder()
+                .name(userRequest.name())
+                .transport(userRequest.transport())
+                .topSpeed(Double.parseDouble(userRequest.topSpeed()))
+                .build();
     }
 }

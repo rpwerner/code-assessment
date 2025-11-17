@@ -7,7 +7,6 @@ import com.giftandgo.code.assessment.domain.restriction.NoIpRestriction;
 import com.giftandgo.code.assessment.domain.validation.service.DefaultUserValidationService;
 import com.giftandgo.code.assessment.domain.validation.service.NoUserValidationService;
 import com.giftandgo.code.assessment.domain.validation.service.UserValidationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

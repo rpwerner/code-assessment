@@ -1,4 +1,4 @@
-package com.giftandgo.code.assessment.domain.result;
+package com.giftandgo.code.assessment.domain.validation.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

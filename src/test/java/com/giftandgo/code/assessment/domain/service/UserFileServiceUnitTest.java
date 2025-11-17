@@ -1,6 +1,6 @@
 package com.giftandgo.code.assessment.domain.service;
 
-import com.giftandgo.code.assessment.domain.result.UserValidationResult;
+import com.giftandgo.code.assessment.domain.validation.service.UserValidationResult;
 import com.giftandgo.code.assessment.domain.validation.service.UserValidationService;
 import com.giftandgo.code.assessment.web.exception.UserValidationException;
 import com.giftandgo.code.assessment.web.service.OutcomeService;

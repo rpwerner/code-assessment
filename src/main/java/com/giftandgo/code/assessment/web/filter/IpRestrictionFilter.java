@@ -7,20 +7,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@AllArgsConstructor
 public class IpRestrictionFilter extends OncePerRequestFilter {
 
-    IpLookupService ipLookupService;
+    private IpLookupService ipLookupService;
 
-    IpRestrictionService ipRestrictionService;
+    private IpRestrictionService ipRestrictionService;
 
-    public IpRestrictionFilter(IpLookupService ipLookupService, IpRestrictionService ipRestrictionService) {
-        this.ipLookupService = ipLookupService;
-        this.ipRestrictionService = ipRestrictionService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,7 +32,6 @@ public class IpRestrictionFilter extends OncePerRequestFilter {
         ipRestrictionService.validateIpInformation(ipInformation);
 
         filterChain.doFilter(request, response);
-
     }
 
     private String retrieveIpAddressFromRequest(HttpServletRequest request) {
