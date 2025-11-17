@@ -1,7 +1,6 @@
 package com.giftandgo.code.assessment.external.client.resttemplate.handler;
 
 import com.giftandgo.code.assessment.external.client.resttemplate.exception.RestTemplateErrorException;
-import com.giftandgo.code.assessment.external.client.resttemplate.handler.RestTemplateErrorHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -40,7 +39,7 @@ public class RestTemplateErrorHandlerUnitTest {
     public void givenClientResponse_whenHandleErrorCalled_thenThrowsRestTemplateErrorException() throws IOException {
         doReturn(HttpStatus.INTERNAL_SERVER_ERROR).when(clientHttpResponse).getStatusCode();
         assertThrows(RestTemplateErrorException.class,
-                ()-> restTemplateErrorHandler.handleError(URI.create("path"), HttpMethod.POST, clientHttpResponse));
+                () -> restTemplateErrorHandler.handleError(URI.create("path"), HttpMethod.POST, clientHttpResponse));
     }
 
 }

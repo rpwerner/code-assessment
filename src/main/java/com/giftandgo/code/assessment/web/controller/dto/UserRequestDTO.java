@@ -1,6 +1,6 @@
 package com.giftandgo.code.assessment.web.controller.dto;
 
-import com.giftandgo.code.assessment.web.validation.annotation.CanBeDouble;
+import com.giftandgo.code.assessment.domain.validation.annotation.CanBeDouble;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 

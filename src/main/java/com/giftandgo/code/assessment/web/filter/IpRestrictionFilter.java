@@ -1,56 +1,53 @@
 package com.giftandgo.code.assessment.web.filter;
 
-import com.giftandgo.code.assessment.external.ipapi.IpApiData;
-import com.giftandgo.code.assessment.external.ipapi.IpAPIService;
-import com.giftandgo.code.assessment.web.exception.IpRestrictionException;
-import com.giftandgo.code.assessment.web.filter.strategy.IpRestrictionStrategy;
+import com.giftandgo.code.assessment.domain.service.IpLookupService;
+import com.giftandgo.code.assessment.domain.service.IpRestrictionService;
+import com.giftandgo.code.assessment.external.client.ipapi.IpApiData;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import java.util.List;
+import java.io.IOException;
 
-@Component
 public class IpRestrictionFilter extends OncePerRequestFilter {
 
-    @Autowired
-    IpAPIService ipAPIService;
+    IpLookupService ipLookupService;
 
-    @Autowired
-    List<IpRestrictionStrategy> ipRestrictions;
+    IpRestrictionService ipRestrictionService;
 
-    @Autowired
-    @Qualifier("handlerExceptionResolver")
-    HandlerExceptionResolver resolver;
+    public IpRestrictionFilter(IpLookupService ipLookupService, IpRestrictionService ipRestrictionService) {
+        this.ipLookupService = ipLookupService;
+        this.ipRestrictionService = ipRestrictionService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) {
+                                    FilterChain filterChain) throws ServletException, IOException {
 
+        String clientIp = retrieveIpAddressFromRequest(request);
+        IpApiData ipInformation = ipLookupService.retrieveIpInformation(clientIp);
+        request.getSession().setAttribute("CLIENT_IP_DATA", ipInformation);
+
+        ipRestrictionService.validateIpInformation(ipInformation);
+
+        filterChain.doFilter(request, response);
+
+    }
+
+    private String retrieveIpAddressFromRequest(HttpServletRequest request) {
         String header = request.getHeader("X-Forwarded-For");
-        String clientIp = header != null && !header.isBlank()
-                ? header.split(",")[0].trim()
-                : request.getRemoteAddr();
 
-        try {
-
-            IpApiData ipInformation = ipAPIService.getIpInformationByIp(clientIp);
-
-            for (IpRestrictionStrategy restriction : ipRestrictions) {
-                if (!restriction.isIpAllowed(ipInformation)) {
-                    throw new IpRestrictionException("The IP %s is not allowed in the system".formatted(clientIp));
-                }
+        if (header != null && !header.isBlank()) {
+            // Comma separated IPs, always get the first if any
+            String[] parts = header.split(",");
+            if (parts.length > 0) {
+                return parts[0].trim();
             }
-
-            filterChain.doFilter(request, response);
-        } catch (Exception e) {
-            resolver.resolveException(request, response, null, e);
         }
+
+        return request.getRemoteAddr();
     }
 }

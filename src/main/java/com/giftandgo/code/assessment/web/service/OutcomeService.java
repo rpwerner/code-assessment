@@ -1,28 +1,30 @@
 package com.giftandgo.code.assessment.web.service;
 
+import com.giftandgo.code.assessment.web.mapper.OutcomeMapper;
 import com.giftandgo.code.assessment.web.controller.dto.UserRequestDTO;
 import com.giftandgo.code.assessment.web.controller.dto.UserResponseDTO;
-import com.google.gson.Gson;
+import com.giftandgo.code.assessment.web.mapper.UserDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
 public class OutcomeService {
 
     @Autowired
-    Gson gson;
+    UserDTOMapper userDTOMapper;
 
-    public String generateOutcomeData(List<UserRequestDTO> userRequestDTOS) {
+    @Autowired
+    OutcomeMapper outcomeMapper;
+
+    public byte[] generateOutcomeData(List<UserRequestDTO> userRequestDTOS) {
         List<UserResponseDTO> userResponseDTOS = userRequestDTOS.stream()
-                .map(dto -> UserResponseDTO.builder()
-                        .name(dto.name())
-                        .transport(dto.transport())
-                        .topSpeed(Double.parseDouble(dto.topSpeed()))
-                        .build())
+                .map(dto -> userDTOMapper.transformUserDTO(dto))
                 .toList();
 
-        return gson.toJson(userResponseDTOS);
+        return outcomeMapper.transformUserResponseDTOsToJson(userResponseDTOS)
+                .getBytes(StandardCharsets.UTF_8);
     }
 }

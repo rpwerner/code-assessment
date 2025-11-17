@@ -1,12 +1,13 @@
 package com.giftandgo.code.assessment.configuration;
 
-import com.giftandgo.code.assessment.web.filter.strategy.CountryIpRestriction;
-import com.giftandgo.code.assessment.web.filter.strategy.IpRestrictionStrategy;
-import com.giftandgo.code.assessment.web.filter.strategy.IspIpRestriction;
-import com.giftandgo.code.assessment.web.filter.strategy.NoIpRestriction;
-import com.giftandgo.code.assessment.web.validation.service.DefaultUserValidationService;
-import com.giftandgo.code.assessment.web.validation.service.NoUserValidationService;
-import com.giftandgo.code.assessment.web.validation.service.UserValidationService;
+import com.giftandgo.code.assessment.domain.restriction.CountryIpRestriction;
+import com.giftandgo.code.assessment.domain.restriction.IpRestrictionStrategy;
+import com.giftandgo.code.assessment.domain.restriction.IspIpRestriction;
+import com.giftandgo.code.assessment.domain.restriction.NoIpRestriction;
+import com.giftandgo.code.assessment.domain.validation.service.DefaultUserValidationService;
+import com.giftandgo.code.assessment.domain.validation.service.NoUserValidationService;
+import com.giftandgo.code.assessment.domain.validation.service.UserValidationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
